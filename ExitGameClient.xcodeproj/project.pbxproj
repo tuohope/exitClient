@@ -100,9 +100,9 @@
 				A95C29511E8EEB4800770425 /* CustomFonts */,
 				A94980EB1E8DDC2D00E52458 /* Models */,
 				A94980EA1E8DDC2600E52458 /* Views */,
-				A94980D81E8DDAFA00E52458 /* AppDelegate.swift */,
 				A94980DC1E8DDAFA00E52458 /* Main.storyboard */,
 				A94980DF1E8DDAFA00E52458 /* Assets.xcassets */,
+				A94980D81E8DDAFA00E52458 /* AppDelegate.swift */,
 				A94980E41E8DDAFA00E52458 /* Info.plist */,
 			);
 			path = ExitGameClient;

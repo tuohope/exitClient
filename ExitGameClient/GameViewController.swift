@@ -275,6 +275,34 @@ extension GameViewController : GameManagerDelegate{
     
     func gameTicked() {
         updateTimerLabel()
+        
+        if (gameManager.runningTime - gameManager.currTime == 300 || gameManager.runningTime - gameManager.currTime == 120){
+            if gameManager.allowExtraTime {
+                let alertController = UIAlertController(title: "Need Extra Time?", message: "Your time is running out. Do you need more time?", preferredStyle: UIAlertControllerStyle.alert) //Replace UIAlertControllerStyle.Alert by UIAlertControllerStyle.alert
+                let DestructiveAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive)
+                let lowOption = UIAlertAction(title: "15 Mins ($4.99)", style: UIAlertActionStyle.default) {
+                    (result : UIAlertAction) -> Void in
+                    self.gameManager.getExtraTime(15)
+                    
+                }
+                let highOption = UIAlertAction(title: "30 Mins ($9.99)", style: UIAlertActionStyle.default) {
+                    (result : UIAlertAction) -> Void in
+                    self.gameManager.getExtraTime(30)
+                    
+                }
+                
+                
+                alertController.addAction(lowOption)
+                alertController.addAction(highOption)
+                alertController.addAction(DestructiveAction)
+                self.present(alertController, animated: true, completion: nil)
+
+                
+
+                
+            }
+        }
+        
     }
 }
 

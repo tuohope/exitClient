@@ -75,9 +75,39 @@ class ConnectionManager: NSObject {
             self.gameManager.liveHelpPending = false;
         }
         
+        socket.on("enableBuyTime") {data, ack in
+            self.gameManager.allowExtraTime = true;
+        }
+        
+        socket.on("disableBuyTime") {data, ack in
+            self.gameManager.allowExtraTime = false;
+        }
     }
     
 
+    func notifyBoughtExtraTime(_ time:Int) {
+        let parameters: Parameters = [
+            "extraTime" : time,
+            "currTime" : gameManager.currTime,
+            "isRunning" : gameManager.isRunning
+        ]
+        
+        let a = Alamofire.request(serverIP+self.roomName!+"/BuyTime", method: .post, parameters: parameters).responseJSON
+            {
+                (response) in
+                if response.result.value is NSNull
+                {
+                    print("nil")
+                    return
+                }else{
+                    print(response.data);
+                }
+        }
+        print(parameters);
+        
+        
+    }
+    
     func postForUpdate() {
         let parameters: Parameters = [
             "currTime": gameManager.currTime,

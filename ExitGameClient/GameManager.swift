@@ -49,6 +49,7 @@ class GameManager: NSObject {
     var successRate:Int = 0;
     
     var hintUsed:Int = 0;
+    var allowExtraTime = true;
 //    var currStep: Int = 0;
     
 //    var objectives:[String] = [];
@@ -106,6 +107,14 @@ class GameManager: NSObject {
             currTime += 1
             gameManagerDelegate?.gameTicked();
         }
+        
+    }
+    
+    func getExtraTime(_ time:Int) {
+        isRunning = true;
+        currTime -= time * 60;
+        allowExtraTime = false;
+        cm().notifyBoughtExtraTime(time);
         
     }
     

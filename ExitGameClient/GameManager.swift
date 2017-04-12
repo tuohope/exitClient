@@ -38,6 +38,7 @@ class GameManager: NSObject {
     var penaltyDefault = 0
     var hintPenalty = 0
     var chatPenalty = 0
+    var liveHelpPending = false;
     
     var incrementDefault = 0;
     var penaltyIncrement = 60

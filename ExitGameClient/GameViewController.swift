@@ -145,6 +145,14 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     @IBAction func liveHelpPressed(_ sender: Any) {
+        if gameManager.liveHelpPending {
+            let alertController = UIAlertController(title: "Live Help", message: "You already a help request pending, please wait for our staff to respond.", preferredStyle: UIAlertControllerStyle.alert) //Replace UIAlertControllerStyle.Alert by UIAlertControllerStyle.alert
+            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+            return;
+        }
+        
         
         let alertController = UIAlertController(title: "Live Help", message: "In order to get help from our staff you must scarifice your play time, current penalty is \(self.gameManager.penaltyIncrement * gameManager.hintUsed + gameManager.chatPenalty) seconds, are you sure?", preferredStyle: UIAlertControllerStyle.alert) //Replace UIAlertControllerStyle.Alert by UIAlertControllerStyle.alert
         let DestructiveAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive)
@@ -154,6 +162,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
             (result : UIAlertAction) -> Void in
             
             self.gameManager.deductTimeForChat();
+            self.gameManager.liveHelpPending = true;
             
         }
         

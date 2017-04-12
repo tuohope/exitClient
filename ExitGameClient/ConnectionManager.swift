@@ -63,6 +63,18 @@ class ConnectionManager: NSObject {
             self.gameManager.stopGame();
         }
         
+        socket.on("timeUpdate") { data, ack in
+            print(data[0])
+            let info = data[0] as! [String:Int]
+//            print(info["currTime"])
+            self.gameManager.currTime = info["currTime"]!
+            
+        }
+        
+        socket.on("helpProcessed") {data, ack in
+            self.gameManager.liveHelpPending = false;
+        }
+        
     }
     
 

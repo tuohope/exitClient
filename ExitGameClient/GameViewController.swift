@@ -29,6 +29,37 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var logViewTrailing: NSLayoutConstraint!
         
 
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    func updateTimerLabel() {
+        timerLabel.text = generateTimeText(gameManager.runningTime - gameManager.currTime);
+    }
+    func showLogView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.logViewTrailing.constant = -31
+            self.logButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI));
+            self.view.layoutIfNeeded()
+        },completion: nil)
+    }
+    
+    func hideLogView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.logViewTrailing.constant = -480
+            self.logButton.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat(2*M_PI));
+            self.view.layoutIfNeeded()
+        },completion: nil)
+    }
+    
+    func generateTimeText(_ time:Int) -> String {
+        let minutes = time / 60;
+        let seconds = time % 60
+        
+        let minText = minutes >= 10 ? "\(minutes)" : "0\(minutes)"
+        let secText = seconds >= 10 ? "\(seconds)" : "0\(seconds)"
+        
+        return "\(minText):\(secText)"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

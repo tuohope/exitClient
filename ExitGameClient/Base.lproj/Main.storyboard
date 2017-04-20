@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -44,16 +45,49 @@
                                     <action selector="AirplanePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1uD-ar-fuw"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iVj-BZ-XTC">
+                                <rect key="frame" x="638.5" y="484" width="54" height="30"/>
+                                <state key="normal" title="Subway">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MXM-vt-btc">
+                                <rect key="frame" x="751" y="369" width="34" height="30"/>
+                                <state key="normal" title="Mine">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOB-gR-lCV">
+                                <rect key="frame" x="238" y="369" width="36" height="30"/>
+                                <state key="normal" title="Terra">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-TI-wFm">
+                                <rect key="frame" x="333.5" y="484" width="52" height="30"/>
+                                <state key="normal" title="Altantis">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.26830888605442177" green="0.34146471088435376" blue="0.57174744897959184" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="iVj-BZ-XTC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="1.3" id="6Ct-u2-Te3"/>
+                            <constraint firstItem="MXM-vt-btc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" multiplier="1.5" id="8zo-mS-v06"/>
+                            <constraint firstItem="6S7-TI-wFm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="1.3" id="K06-2P-vgC"/>
                             <constraint firstItem="GCy-c4-NU9" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XT4-Y5-G6e"/>
+                            <constraint firstItem="GCy-c4-NU9" firstAttribute="leading" secondItem="6S7-TI-wFm" secondAttribute="trailing" constant="98" id="ceg-0b-SMV"/>
                             <constraint firstItem="GCy-c4-NU9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gcZ-QV-cgZ"/>
+                            <constraint firstItem="aOB-gR-lCV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="j2y-BD-Fz4"/>
+                            <constraint firstItem="aOB-gR-lCV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" multiplier="1/2" id="lBO-DZ-Qmq"/>
+                            <constraint firstItem="MXM-vt-btc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="rcq-eB-Lo5"/>
+                            <constraint firstItem="iVj-BZ-XTC" firstAttribute="leading" secondItem="GCy-c4-NU9" secondAttribute="trailing" constant="98" id="syj-lP-pie"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="33.984375" y="39.84375"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="G0J-kY-7B4">
@@ -74,7 +108,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Objectives" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBN-EZ-GPU">
-                                                <rect key="frame" x="220" y="21" width="118" height="34"/>
+                                                <rect key="frame" x="220" y="21.5" width="118" height="33.5"/>
                                                 <fontDescription key="fontDescription" name="SegoeUI-Semibold" family="Segoe UI" pointSize="25"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -198,11 +232,81 @@
                                     <constraint firstAttribute="bottom" secondItem="W9y-J2-Vsd" secondAttribute="bottom" id="lyz-xD-hzy"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdN-23-8xK" userLabel="AfterGameInfo">
+                                <rect key="frame" x="0.0" y="175" width="1024" height="459"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time is up!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2a-g2-qQi">
+                                        <rect key="frame" x="443" y="72.5" width="139.5" height="39"/>
+                                        <fontDescription key="fontDescription" name="SegoeUI" family="Segoe UI" pointSize="29"/>
+                                        <color key="textColor" red="0.98541135199999996" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="59f-A2-1bB" userLabel="ExtraTimeWindow">
+                                        <rect key="frame" x="0.0" y="165" width="1024" height="200"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you want a little bit more time to finish your game?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2e-CI-ntE">
+                                                <rect key="frame" x="180" y="23.5" width="664" height="33.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                <color key="textColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3m-hk-j5h" userLabel="15MinButton">
+                                                <rect key="frame" x="456.5" y="85" width="111" height="30"/>
+                                                <state key="normal" title="Another 15 Mins">
+                                                    <color key="titleColor" red="0.8980392157" green="0.30196078430000001" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="extraTimeOnePressed:" destination="jgn-gb-yBg" eventType="touchUpInside" id="ASg-gI-Tta"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zj3-Ug-4Im" userLabel="30MinButton">
+                                                <rect key="frame" x="455" y="145" width="114" height="30"/>
+                                                <state key="normal" title="Another 30 Mins">
+                                                    <color key="titleColor" red="0.98541135199999996" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="extraTimeTwoPressed:" destination="jgn-gb-yBg" eventType="touchUpInside" id="Amf-hR-6q7"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="V2e-CI-ntE" firstAttribute="centerX" secondItem="59f-A2-1bB" secondAttribute="centerX" id="2Qb-DG-1V4"/>
+                                            <constraint firstItem="zj3-Ug-4Im" firstAttribute="top" secondItem="R3m-hk-j5h" secondAttribute="bottom" constant="30" id="DYI-3g-Fsd"/>
+                                            <constraint firstItem="zj3-Ug-4Im" firstAttribute="centerX" secondItem="59f-A2-1bB" secondAttribute="centerX" id="OMD-VR-rZI"/>
+                                            <constraint firstAttribute="height" constant="200" id="WHq-6K-wSx"/>
+                                            <constraint firstItem="R3m-hk-j5h" firstAttribute="centerX" secondItem="59f-A2-1bB" secondAttribute="centerX" id="cj4-V2-FRC"/>
+                                            <constraint firstItem="R3m-hk-j5h" firstAttribute="top" secondItem="V2e-CI-ntE" secondAttribute="bottom" constant="28" id="hoI-cK-MtV"/>
+                                            <constraint firstItem="V2e-CI-ntE" firstAttribute="centerY" secondItem="59f-A2-1bB" secondAttribute="centerY" multiplier="0.4" id="qjL-1W-SWz"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.29005872483221479" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="59f-A2-1bB" firstAttribute="top" secondItem="v2a-g2-qQi" secondAttribute="bottom" constant="53.5" id="GHZ-fW-eqf"/>
+                                    <constraint firstItem="59f-A2-1bB" firstAttribute="centerX" secondItem="RdN-23-8xK" secondAttribute="centerX" id="IG0-au-V2d"/>
+                                    <constraint firstItem="59f-A2-1bB" firstAttribute="width" secondItem="RdN-23-8xK" secondAttribute="width" id="Nwe-fI-Mjc"/>
+                                    <constraint firstItem="v2a-g2-qQi" firstAttribute="centerX" secondItem="RdN-23-8xK" secondAttribute="centerX" id="TyL-ne-Vlq"/>
+                                    <constraint firstItem="v2a-g2-qQi" firstAttribute="centerY" secondItem="RdN-23-8xK" secondAttribute="centerY" multiplier="0.4" id="ptJ-yp-XTc"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dNj-xo-dh4">
+                                <rect key="frame" x="436" y="360" width="151" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="30"/>
+                                <state key="normal" title="Start Game">
+                                    <color key="titleColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="startGamePressed:" destination="jgn-gb-yBg" eventType="touchUpInside" id="9rG-1a-IGW"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UVa-wg-Gj4" userLabel="TimerView">
                                 <rect key="frame" x="0.0" y="634" width="1024" height="134"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="42:13" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XOx-S2-2RJ" userLabel="TimerLabel">
-                                        <rect key="frame" x="425" y="32" width="174" height="70"/>
+                                        <rect key="frame" x="426" y="32" width="174" height="70"/>
                                         <fontDescription key="fontDescription" name="MyriadPro-Bold" family="Myriad Pro" pointSize="70"/>
                                         <color key="textColor" red="0.90588235294117647" green="0.29803921568627451" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -382,7 +486,7 @@
                                         <rect key="frame" x="31" y="0.0" width="449" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Logs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="db4-8W-xrT">
-                                                <rect key="frame" x="162" y="21" width="126" height="34"/>
+                                                <rect key="frame" x="162" y="21.5" width="126" height="33.5"/>
                                                 <fontDescription key="fontDescription" name="SegoeUI-Semibold" family="Segoe UI" pointSize="25"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -443,25 +547,33 @@
                             <constraint firstAttribute="trailing" secondItem="AVN-FX-7mx" secondAttribute="trailing" constant="-480" id="0na-aY-9IF"/>
                             <constraint firstItem="qfF-fd-0DY" firstAttribute="width" secondItem="cvX-bO-1ed" secondAttribute="width" id="6Nb-un-00a"/>
                             <constraint firstItem="UVa-wg-Gj4" firstAttribute="top" secondItem="MbQ-er-2yZ" secondAttribute="bottom" id="BAT-Wn-zC0"/>
+                            <constraint firstItem="RdN-23-8xK" firstAttribute="centerX" secondItem="MbQ-er-2yZ" secondAttribute="centerX" id="Kyo-iH-dkw"/>
                             <constraint firstItem="3Pp-Sa-C9a" firstAttribute="top" secondItem="UVa-wg-Gj4" secondAttribute="bottom" id="Okc-gc-tq1"/>
+                            <constraint firstItem="RdN-23-8xK" firstAttribute="centerY" secondItem="MbQ-er-2yZ" secondAttribute="centerY" id="Q9P-PY-EiF"/>
                             <constraint firstItem="MbQ-er-2yZ" firstAttribute="width" secondItem="cvX-bO-1ed" secondAttribute="width" id="SMv-JN-bac"/>
                             <constraint firstItem="qfF-fd-0DY" firstAttribute="top" secondItem="REb-R8-Yh7" secondAttribute="bottom" id="SV2-uc-7ZP"/>
                             <constraint firstItem="qfF-fd-0DY" firstAttribute="centerX" secondItem="cvX-bO-1ed" secondAttribute="centerX" id="Sy4-rf-iLY"/>
                             <constraint firstItem="MbQ-er-2yZ" firstAttribute="centerX" secondItem="cvX-bO-1ed" secondAttribute="centerX" id="bkl-uO-oyF"/>
+                            <constraint firstItem="RdN-23-8xK" firstAttribute="width" secondItem="MbQ-er-2yZ" secondAttribute="width" id="de2-Jh-l0K"/>
                             <constraint firstItem="UVa-wg-Gj4" firstAttribute="centerX" secondItem="cvX-bO-1ed" secondAttribute="centerX" id="kCT-L8-eJg"/>
                             <constraint firstItem="AVN-FX-7mx" firstAttribute="height" secondItem="MbQ-er-2yZ" secondAttribute="height" id="mmd-vk-E3k"/>
                             <constraint firstItem="AVN-FX-7mx" firstAttribute="centerY" secondItem="MbQ-er-2yZ" secondAttribute="centerY" id="nqg-eC-GGE"/>
                             <constraint firstItem="UVa-wg-Gj4" firstAttribute="width" secondItem="cvX-bO-1ed" secondAttribute="width" id="q3n-OR-tp5"/>
                             <constraint firstItem="MbQ-er-2yZ" firstAttribute="top" secondItem="qfF-fd-0DY" secondAttribute="bottom" id="qwH-tS-Nbs"/>
+                            <constraint firstItem="RdN-23-8xK" firstAttribute="height" secondItem="MbQ-er-2yZ" secondAttribute="height" id="wAE-YF-fJb"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="afterGameInfoView" destination="RdN-23-8xK" id="7ek-KR-HtR"/>
+                        <outlet property="extraTimeWindowView" destination="59f-A2-1bB" id="g4N-ab-8bB"/>
                         <outlet property="liveHelpButton" destination="f9D-Dw-4T1" id="l4w-b1-1cj"/>
                         <outlet property="logButton" destination="vBY-dV-gJX" id="qp0-V6-H7C"/>
                         <outlet property="logTable" destination="idg-es-fJd" id="xQb-86-fRO"/>
                         <outlet property="logViewTrailing" destination="0na-aY-9IF" id="V6Z-wX-a7n"/>
+                        <outlet property="objTitleView" destination="FXD-bg-5DF" id="3AC-yK-PNP"/>
                         <outlet property="objectiveTable" destination="W9y-J2-Vsd" id="Whs-Z0-zM1"/>
+                        <outlet property="startGameButton" destination="dNj-xo-dh4" id="QkJ-1E-p62"/>
                         <outlet property="timerLabel" destination="XOx-S2-2RJ" id="z8B-rF-vSd"/>
                         <outlet property="titleImageView" destination="M8Q-Bc-cj5" id="CDa-L5-7IA"/>
                         <outlet property="titleLabel" destination="3y4-A1-qSB" id="fh5-xA-kkn"/>

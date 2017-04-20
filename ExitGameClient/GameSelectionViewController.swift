@@ -10,20 +10,24 @@ import UIKit
 import KVNProgress
 
 class GameSelectionViewController: UIViewController {
-    var cm = ConnectionManager.sharedInstance;
-
+    
     override func viewDidLoad() {
         super.viewDidLoad();
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
-        cm.delegate = self;
+        ConnectionManager.sharedInstance.delegate = self;
     }
 
 
     @IBAction func AirplanePressed(_ sender: Any) {
-        cm.fetchData(room: "Airplane")
+        let cm = ConnectionManager.sharedInstance;
+        cm.roomName = "airplane"
+        cm.establishConnection();
+        cm.fetchData();
+//        self.present(self.storyboard?.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController, animated: true, completion: nil)
+
     }
 }
 

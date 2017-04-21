@@ -84,7 +84,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         timerLabel.isHidden = true
         timerLabel.text = generateTimeText(gameManager.runningTime);
         
-        logButton.isUserInteractionEnabled = false
+//        logButton.isUserInteractionEnabled = false
     }
     
     
@@ -260,6 +260,7 @@ extension GameViewController : GameManagerDelegate{
         afterGameInfoView.isHidden = true;
         objTitleView.isHidden = false;
         logTable.reloadData();
+//        logButton.isUserInteractionEnabled = true;
         objectiveTable.reloadData();
         objectiveTable.isUserInteractionEnabled = true;
         logTable.isUserInteractionEnabled = true;
@@ -273,6 +274,9 @@ extension GameViewController : GameManagerDelegate{
         
         startGameButton.isHidden = false;
         afterGameInfoView.isHidden = true;
+//        logButton.isUserInteractionEnabled = false;
+        hideLogView();
+
 
         logTable.reloadData();
         objectiveTable.reloadData();

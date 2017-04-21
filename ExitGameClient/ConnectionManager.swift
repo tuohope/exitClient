@@ -50,42 +50,40 @@ class ConnectionManager: NSObject {
         }
         
 
-        
-        socket.on("s_startAirplaneGame") { data, ack in
-            print("game START message received")
-            if (gameManager.gameManagerDelegate != nil){
-                let info = data[0] as! String
-                print(info)
-
-                gameManager.startGame();
-            }
-            
+        socket.on("startGame") {
+            data in
+            gameManager.startGame();
         }
         
-        socket.on("s_stopAirplaneGame") { data, ack in
-            print("game STOP message received")
+        socket.on("stopGame") {
+            data in
             gameManager.stopGame();
         }
         
-        socket.on("timeUpdate") { data, ack in
-            print(data[0])
-            let info = data[0] as! [String:Int]
-//            print(info["currTime"])
-            gameManager.currTime = info["currTime"]!
-            
+        socket.on("disableCYG") {data, ack in
+            gameManager.disableCYG();
         }
         
-        socket.on("helpProcessed") {data, ack in
-            gameManager.liveHelpPending = false;
+        socket.on("enableCYG") {data, ack in
+            gameManager.enableCYG();
         }
         
-        socket.on("enableBuyTime") {data, ack in
-            gameManager.allowExtraTime = true;
+        socket.on("addTime") {data, ack in
+            let time = data[0] as! Int
+            gameManager.addTime(time);
         }
-        
-        socket.on("disableBuyTime") {data, ack in
-            gameManager.allowExtraTime = false;
+        socket.on("deductTime") {data, ack in
+            let time = data[0] as! Int
+            gameManager.deductTime(time);
         }
+    }
+    
+    func signalCYGEnabled() {
+        socket.emit("CYGEnabled", "")
+    }
+    
+    func signalCYGDisabled() {
+        socket.emit("CYGDisabled", "")
     }
     
     func signalGameStarted() {
@@ -95,13 +93,16 @@ class ConnectionManager: NSObject {
     func signalGameFinished()  {
         socket.emit("gameFinished", "game has finished");
     }
+    func signalGameStopped() {
+        socket.emit("gameStopped", "game stopped and resetted");
+    }
 
     func signalObjChanged()  {
         let gm = GameManager.sharedInstance;
         
-        let data = ["currTime" : gm.currTime,
-                    "currObjectiveText" : gm.currObjectiveText,
-                    "currObjectiveTime": gm.currObjectiveTime] as [String : Any]
+        let data = [//"currTime" : gm.currTime,
+                    "currObjectiveId" : gm.currObjectiveId,
+                    "stepCompleteTime": gm.stepCompleteTime!] as [String : Any]
         
         socket.emit("objectiveChanged",data);
 
@@ -123,7 +124,15 @@ class ConnectionManager: NSObject {
     func signalBoughtExtraTime() {
         let gm = GameManager.sharedInstance;
         let data = ["extraTimeBought" : gm.extraTimeBought]
-        socket.emit("chatHintUsed", data)
+        socket.emit("extraTimeBought", data)
+    }
+    
+    func signalTimeAdded() {
+        socket.emit("timeAdded", GameManager.sharedInstance.timeModifier) 
+    }
+    
+    func signalTimeDeducted() {
+        socket.emit("timeDeducted", GameManager.sharedInstance.timeModifier)
     }
     
     func establishConnection() {
@@ -156,7 +165,7 @@ class ConnectionManager: NSObject {
                     return
             }
             
-            //            print("JSON: \(JSON)")
+            //print("JSON: \(JSON)")
             gameManager.gameTitle = JSON["gameTitle"] as! String
             gameManager.difficulty = JSON["difficulty"] as! Int
             gameManager.successRate = JSON["successRate"] as! Int
@@ -168,6 +177,7 @@ class ConnectionManager: NSObject {
             gameManager.penaltyIncrement = JSON["penaltyIncrement"] as! Int
             
             let objsRawdata = JSON["objectives"] as! [Any]
+            
             
             for obj in objsRawdata{
                 var data = obj as![String:Any]
@@ -181,6 +191,7 @@ class ConnectionManager: NSObject {
                 gameManager.objectives.append(newObj);
                 
             }
+            gameManager.stepCompleteTime = [Int?](repeating: nil, count:gameManager.objectives.count)
             gameManager.penaltyIncrement = JSON["penaltyIncrement"] as! Int
             self.delegate?.fetchDataSuccess();
         }

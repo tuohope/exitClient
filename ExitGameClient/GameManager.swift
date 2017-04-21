@@ -38,7 +38,7 @@ class GameManager: NSObject {
     var objectivesShown:[Int] = [];
 
     var gameTitle = ""
-    var runningTime = 45 * 60
+    var runningTime = 50 * 60
     var difficulty:Int = 0;
     var successRate:Int = 0;
     var currTime = 0
@@ -50,18 +50,25 @@ class GameManager: NSObject {
     var chatHintUsed:Int = 0;
     var liveHelpPending = false;
     
-    var currObjectiveText = ""
-    var currObjectiveTime = 0
+    var currObjectiveId = -1;
+    var stepCompleteTime:[Int?]?
+    
+    var timeModifier = 0;
+
+    
+//    var currObjectiveText = ""
+//    var currObjectiveTime = 0
     
     
     var allowExtraTime = true;
     var extraTimeBought = 0;
 
     var startTime:Date?
+    var pausedTime = 0;
 
     override private init() {
         super.init()
-        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(GameManager.tickGame), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval:1, target: self, selector: #selector(GameManager.tickGame), userInfo: nil, repeats: true)
     }
     
     
@@ -69,18 +76,23 @@ class GameManager: NSObject {
         if (self.gameStatus == .ready){
             resetGame()
             startTime = Date();
+            print(startTime!);
             self.gameStatus = .ingame;
             objectivesShown.append(0);
+            self.currObjectiveId = 0;
             gameManagerDelegate?.gameStarted();
+            
             ConnectionManager.sharedInstance.signalGameStarted();
+            ConnectionManager.sharedInstance.signalObjChanged();
         }
     }
     
     func stopGame()  {
-        if (self.gameStatus == .ingame){
+        if (self.gameStatus == .ingame || self.gameStatus == .finished){
             self.gameStatus = .ready
             resetGame();
             startTime = nil;
+            ConnectionManager.sharedInstance.signalGameStopped()
             gameManagerDelegate?.gameStopped();
         }
     }
@@ -94,8 +106,12 @@ class GameManager: NSObject {
         chatHintUsed = 0;
         extraTimeBought = 0;
         startTime = nil;
-        currObjectiveText = ""
-        currObjectiveTime = 0
+        currObjectiveId = -1;
+        timeModifier = 0;
+        stepCompleteTime = [Int?](repeating: nil, count:objectives.count)
+//        currObjectiveText = ""
+//        currObjectiveTime = 0
+        pausedTime = 0
         
         for i in objectives{
             i.isHintShown = false;
@@ -107,7 +123,7 @@ class GameManager: NSObject {
         if (self.gameStatus == .ingame){
             let now = Date();
             let nowInt = Int(now.timeIntervalSince1970);
-            currTime = nowInt - Int(startTime!.timeIntervalSince1970) + calculatePenalizedTime() - extraTimeBought;
+            currTime = nowInt - Int(startTime!.timeIntervalSince1970) + calculatePenalizedTime() - extraTimeBought - pausedTime + timeModifier;
             if currTime >= runningTime {
                 gameStatus = .finished;
                 gameManagerDelegate?.gameFinished();
@@ -116,17 +132,48 @@ class GameManager: NSObject {
 
             gameManagerDelegate?.gameTicked();
         }
+        if (self.gameStatus == .finished){
+            pausedTime += 1;
+        }
         
+        
+    }
+    
+    
+    func addTime(_ t:Int) {
+        timeModifier -= t;
+        print(timeModifier);
+        ConnectionManager.sharedInstance.signalTimeAdded();
+    }
+    
+    func deductTime(_ t:Int) {
+        timeModifier += t;
+        ConnectionManager.sharedInstance.signalTimeDeducted();
+    }
+    
+    func enableCYG(){
+        allowExtraTime = true;
+        ConnectionManager.sharedInstance.signalCYGEnabled();
+    }
+    
+    func disableCYG(){
+        allowExtraTime = false;
+        ConnectionManager.sharedInstance.signalCYGDisabled();
     }
     
     func getExtraTime(_ time:Int) {
         let cm = ConnectionManager.sharedInstance;
 
-        gameStatus = .ingame
-        gameManagerDelegate?.gameStarted()
+        if (gameStatus == .finished){
+            gameStatus = .ingame
+            gameManagerDelegate?.gameStarted()
+         }
+        
+        
         extraTimeBought += time * 60
         allowExtraTime = false;
         cm.signalBoughtExtraTime();
+        
         
     }
     
@@ -173,7 +220,8 @@ class GameManager: NSObject {
             uncheckHelper(i)
         }
         
-        currObjectiveText = objectives[ objectivesShown.last!].objText
+        currObjectiveId = objectivesShown.last!
+//        currObjectiveText = objectives[ objectivesShown.last!].objText
         cm.signalObjChanged();
     }
     
@@ -198,6 +246,7 @@ class GameManager: NSObject {
         
         let currObj = objectives[id]
         currObj.isComplete = true;
+        stepCompleteTime![id] = Int(Date().timeIntervalSince1970);
         completedStep.append(id);
         for i in currObj.enableObj{
             let requirement = Set(objectives[i].requiredObj)
@@ -206,7 +255,8 @@ class GameManager: NSObject {
                 objectivesShown.append(i)
             }
         }
-        currObjectiveText = objectives[ objectivesShown.last!].objText
+        currObjectiveId = objectivesShown.last!
+//        currObjectiveText = objectives[ objectivesShown.last!].objText
         cm.signalObjChanged();
     }
     

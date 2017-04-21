@@ -37,23 +37,11 @@ class ObjectiveTableViewCell: UITableViewCell {
 
     @IBAction func checkButtonPressed(_ sender: Any) {
         delegate?.checkButtonPressed(self.tag);
-
-        
-        //let tag = self.tag
-
-//        if gm.objtest[tag].isComplete! {
-//            gm.uncheckObjective(tag);
-//        }else{
-//            gm.checkObjective(tag);
-//        }
-//        
-//        self.objTable.reloadData();
     }
     
     
     @IBAction func hintButtonPressed(_ sender: Any) {
         delegate?.hintButtonPressed(self.tag);
-//        print(objLabel.text!)
     }
 
 }

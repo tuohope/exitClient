@@ -22,6 +22,7 @@ protocol GameManagerDelegate {
     func gamePaused()
     func gameFinished()
     func gameTicked()
+    func helpReplied(_ reply:String)
 }
 
 
@@ -48,24 +49,21 @@ class GameManager: NSObject {
     var chatPenalty = 0
     var textHintUsed:Int = 0;
     var chatHintUsed:Int = 0;
-    var liveHelpPending = false;
     
     var currObjectiveId = -1;
     var stepCompleteTime:[Int?]?
     
     var timeModifier = 0;
 
-    
-//    var currObjectiveText = ""
-//    var currObjectiveTime = 0
-    
-    
     var allowExtraTime = true;
     var extraTimeBought = 0;
 
     var startTime:Date?
     var pausedTime = 0;
 
+    var liveHelpPending = false;
+    var liveHelpMsg = "";
+    
     override private init() {
         super.init()
         Timer.scheduledTimer(timeInterval:1, target: self, selector: #selector(GameManager.tickGame), userInfo: nil, repeats: true)
@@ -109,9 +107,9 @@ class GameManager: NSObject {
         currObjectiveId = -1;
         timeModifier = 0;
         stepCompleteTime = [Int?](repeating: nil, count:objectives.count)
-//        currObjectiveText = ""
-//        currObjectiveTime = 0
         pausedTime = 0
+        liveHelpPending = false;
+        liveHelpMsg = "";
         
         for i in objectives{
             i.isHintShown = false;
@@ -196,11 +194,28 @@ class GameManager: NSObject {
         return extraTime;
     }
     
-    func deductTimeForChat() {
+    
+    func sendHelpWithMessage(_ message:String){
+        print(message);
+        self.liveHelpMsg = message;
         self.chatHintUsed += 1;
+        self.liveHelpPending = true;
         self.gameManagerDelegate?.gameTicked();
-        ConnectionManager.sharedInstance.signalChatHintUsed();
+        ConnectionManager.sharedInstance.signalLiveHelpMessage();
     }
+    func showReplyMessage(_ reply:String){
+        self.liveHelpMsg = "";
+        self.liveHelpPending = false;
+        self.gameManagerDelegate!.helpReplied(reply);
+        ConnectionManager.sharedInstance.signalReplyReceived();
+    };
+    
+    
+//    func deductTimeForChat() {
+//        self.chatHintUsed += 1;
+//        self.gameManagerDelegate?.gameTicked();
+//        ConnectionManager.sharedInstance.signalChatHintUsed();
+//    }
     
     func deductTimeForHint() {
         self.textHintUsed += 1;
@@ -221,7 +236,6 @@ class GameManager: NSObject {
         }
         
         currObjectiveId = objectivesShown.last!
-//        currObjectiveText = objectives[ objectivesShown.last!].objText
         cm.signalObjChanged();
     }
     
@@ -256,7 +270,6 @@ class GameManager: NSObject {
             }
         }
         currObjectiveId = objectivesShown.last!
-//        currObjectiveText = objectives[ objectivesShown.last!].objText
         cm.signalObjChanged();
     }
     

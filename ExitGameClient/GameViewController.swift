@@ -87,7 +87,50 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        logButton.isUserInteractionEnabled = false
     }
     
-    
+    //Mark TableView delegates
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        if tableView.isEqual(self.logTable){
+            return gameManager.gameLogs.count;
+        }else{
+            return gameManager.objectivesShown.count;
+        }
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        if tableView.isEqual(self.logTable){
+            let log = gameManager.gameLogs[indexPath.row]
+            
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LogTableViewCell") as! LogTableViewCell
+            cell.messageLabel.text = log.text!
+            cell.backgroundColor = cell.contentView.backgroundColor;
+            
+            cell.typeLabel.text = "[\(log.type!)]"
+            cell.timeLabel.text = "[\(generateTimeText(log.time!))]"
+            
+            return cell;
+            
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ObjectiveTableViewCell") as! ObjectiveTableViewCell
+            cell.backgroundColor = cell.contentView.backgroundColor;
+            
+            cell.tag = gameManager.objectivesShown[indexPath.row];
+            cell.delegate = self;
+            cell.objLabel.text = gameManager.objectives[cell.tag].objText
+            
+            if (gameManager.objectives[cell.tag].isHintShown!){
+                cell.hintButton.backgroundColor = UIColor.gray
+            }else{
+                cell.hintButton.backgroundColor = UIColor.init(rgb: 0xE54D42)
+            }
+            
+            if (gameManager.objectives[cell.tag].isComplete!){
+                cell.objCheckMark.isHidden = false;
+            }else{
+                cell.objCheckMark.isHidden = true;
+            }
+            return cell;
+        }
+    }
 
     @IBAction func extraTimeOnePressed(_ sender: Any) {
         gameManager.getExtraTime(15)
@@ -110,7 +153,7 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func liveHelpPressed(_ sender: Any) {
-        let penaltyTime = gameManager.chatPenalty + ((gameManager.textHintUsed + gameManager.chatHintUsed) * gameManager.penaltyIncrement);
+        let penaltyTime = gameManager.chatPenalty + ((gameManager.textHintUsed + gameManager.chatHintUsed + 1) * gameManager.penaltyIncrement);
 
         
         if gameManager.liveHelpPending {
@@ -122,16 +165,109 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         
-        let alertController = UIAlertController(title: "Live Help", message: "In order to get help from our staff you must scarifice your play time, current penalty is \(penaltyTime) seconds, are you sure?", preferredStyle: UIAlertControllerStyle.alert) //Replace UIAlertControllerStyle.Alert by UIAlertControllerStyle.alert
-        let DestructiveAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive)
         
-        // Replace UIAlertActionStyle.Default by UIAlertActionStyle.default
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+        if gameManager.currTime + penaltyTime > gameManager.runningTime {
+            
+            if gameManager.allowExtraTime {
+                let alertController = UIAlertController(title: "Live Help", message: "You don't have enough time to get Live Help, do you wish to extend your play time and get Help?", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addTextField {
+                    (textField: UITextField!) -> Void in
+                    textField.placeholder = "Message"
+                }
+                
+                
+                let DestructiveAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive)
+                let lowOption = UIAlertAction(title: "15 Mins ", style: UIAlertActionStyle.default) {
+                    (result : UIAlertAction) -> Void in
+                    
+                    self.gameManager.getExtraTime(15)
+                    let message = alertController.textFields!.first!.text
+                    if (message!.characters.count > 140){
+                        let tooLongWarning = UIAlertController(title: "Live Help", message: "Your message is too long", preferredStyle: UIAlertControllerStyle.alert)
+                        tooLongWarning.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive))
+                        self.present(tooLongWarning, animated: false, completion: nil);
+                        
+                        print("too long msg");
+                    }else{
+                        let confirmAlert = UIAlertController(title: "Live Help", message: "Your message is \"\(message!)\", are you sure", preferredStyle: UIAlertControllerStyle.alert)
+                        
+                        let sentAction = UIAlertAction(title: "Send", style: UIAlertActionStyle.default){
+                            (result : UIAlertAction) -> () in
+                            self.gameManager.sendHelpWithMessage(message!);
+                        }
+                        confirmAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive))
+                        confirmAlert.addAction(sentAction);
+                        self.present(confirmAlert, animated: false, completion: nil);
+                    }
+                }
+                let highOption = UIAlertAction(title: "30 Mins ", style: UIAlertActionStyle.default) {
+                    (result : UIAlertAction) -> Void in
+                    self.gameManager.getExtraTime(30)
+                    let message = alertController.textFields!.first!.text
+                    if (message!.characters.count > 140){
+                        let tooLongWarning = UIAlertController(title: "Live Help", message: "Your message is too long", preferredStyle: UIAlertControllerStyle.alert)
+                        tooLongWarning.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive))
+                        self.present(tooLongWarning, animated: false, completion: nil);
+                        
+                        print("too long msg");
+                    }else{
+                        let confirmAlert = UIAlertController(title: "Live Help", message: "Your message is \"\(message!)\", are you sure", preferredStyle: UIAlertControllerStyle.alert)
+                        
+                        let sentAction = UIAlertAction(title: "Send", style: UIAlertActionStyle.default){
+                            (result : UIAlertAction) -> () in
+                            self.gameManager.sendHelpWithMessage(message!);
+                        }
+                        confirmAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive))
+                        confirmAlert.addAction(sentAction);
+                        self.present(confirmAlert, animated: false, completion: nil);
+                    }
+                    
+                }
+                alertController.addAction(lowOption)
+                alertController.addAction(highOption)
+                alertController.addAction(DestructiveAction)
+                self.present(alertController, animated: true, completion: nil)
+                return;
+            }else{
+                let alertController = UIAlertController(title: "Live Help", message: "You don't have enough time to get Live Help", preferredStyle: UIAlertControllerStyle.alert)
+                let DestructiveAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive)
+                alertController.addAction(DestructiveAction)
+                self.present(alertController, animated: true, completion: nil)
+                return;
+            }
+        }
+
+        
+        
+        
+        let alertController = UIAlertController(title: "Live Help", message: "Scarifice your play time and send one message(140 characters max) to our staff to ask any question. current penalty is \(penaltyTime) seconds, are you sure?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alertController.addTextField {
+            (textField: UITextField!) -> Void in
+            textField.placeholder = "Message"
+        }
+        
+        let DestructiveAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive)
+        let okAction = UIAlertAction(title: "Send", style: UIAlertActionStyle.default) {
             (result : UIAlertAction) -> Void in
-            
-            self.gameManager.deductTimeForChat();
-            self.gameManager.liveHelpPending = true;
-            
+            let message = alertController.textFields!.first!.text
+            if (message!.characters.count > 140){
+                let tooLongWarning = UIAlertController(title: "Live Help", message: "Your message is too long", preferredStyle: UIAlertControllerStyle.alert)
+                tooLongWarning.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive))
+                self.present(tooLongWarning, animated: false, completion: nil);
+                
+                print("too long msg");
+            }else{
+                let confirmAlert = UIAlertController(title: "Live Help", message: "Your message is \"\(message!)\", are you sure", preferredStyle: UIAlertControllerStyle.alert)
+                
+                let sentAction = UIAlertAction(title: "Send", style: UIAlertActionStyle.default){
+                    (result : UIAlertAction) -> () in
+                    self.gameManager.sendHelpWithMessage(message!);
+                }
+                confirmAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive))
+                confirmAlert.addAction(sentAction);
+                self.present(confirmAlert, animated: false, completion: nil);
+            }
         }
         
         alertController.addAction(DestructiveAction)
@@ -209,7 +345,7 @@ extension GameViewController : ObjectiveTableViewCellDelegate{
                 
                 return;
             }else{
-                let alertController = UIAlertController(title: "Get a hint", message: "You don't have enough time to get a hint", preferredStyle: UIAlertControllerStyle.alert) //Replace UIAlertControllerStyle.Alert by UIAlertControllerStyle.alert
+                let alertController = UIAlertController(title: "Get a hint", message: "You don't have enough time to get a hint", preferredStyle: UIAlertControllerStyle.alert)
                 let DestructiveAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive)
                 
                 alertController.addAction(DestructiveAction)
@@ -325,58 +461,30 @@ extension GameViewController : GameManagerDelegate{
         }
         
     }
-    
-    
-    
-    
-    
-    
-    
-    //Mark TableView delegates
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        if tableView.isEqual(self.logTable){
-            return gameManager.gameLogs.count;
-        }else{
-            return gameManager.objectivesShown.count;
+    func helpReplied(_ r:String){
+        
+        let newLog = GameLog.init(Text: r, Time: self.gameManager.runningTime - self.gameManager.currTime, Type: "GM")
+        self.gameManager.gameLogs.append(newLog)
+        
+        UIView.performWithoutAnimation {
+            self.logTable.reloadData();
+            self.logTable.beginUpdates();
+            self.logTable.endUpdates();
         }
+        self.logTable.scrollToBottom()
+        self.objectiveTable.reloadData();
+
+        
+        let alertController = UIAlertController(title: "You got a reply from GM", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            (result : UIAlertAction) -> Void in
+            self.showLogView();
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: false, completion: nil);
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        if tableView.isEqual(self.logTable){
-            let log = gameManager.gameLogs[indexPath.row]
-            
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LogTableViewCell") as! LogTableViewCell
-            cell.messageLabel.text = log.text!
-            cell.backgroundColor = cell.contentView.backgroundColor;
-            
-            cell.typeLabel.text = "[\(log.type!)]"
-            cell.timeLabel.text = "[\(generateTimeText(log.time!))]"
-            
-            return cell;
-            
-        }else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ObjectiveTableViewCell") as! ObjectiveTableViewCell
-            cell.backgroundColor = cell.contentView.backgroundColor;
-            
-            cell.tag = gameManager.objectivesShown[indexPath.row];
-            cell.delegate = self;
-            cell.objLabel.text = gameManager.objectives[cell.tag].objText
-            
-            if (gameManager.objectives[cell.tag].isHintShown!){
-                cell.hintButton.backgroundColor = UIColor.gray
-            }else{
-                cell.hintButton.backgroundColor = UIColor.init(rgb: 0xE54D42)
-            }
-            
-            if (gameManager.objectives[cell.tag].isComplete!){
-                cell.objCheckMark.isHidden = false;
-            }else{
-                cell.objCheckMark.isHidden = true;
-            }
-            return cell;       
-        }
-    }
+    
 }
 
 

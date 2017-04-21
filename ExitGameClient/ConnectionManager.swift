@@ -76,6 +76,14 @@ class ConnectionManager: NSObject {
             let time = data[0] as! Int
             gameManager.deductTime(time);
         }
+        
+        socket.on("replyLiveHelp") {data, ack in
+//            print(data[0]);
+            let reply = data[0] as! String
+            gameManager.showReplyMessage(reply);
+        
+        }
+        
     }
     
     func signalCYGEnabled() {
@@ -134,6 +142,12 @@ class ConnectionManager: NSObject {
     func signalTimeDeducted() {
         socket.emit("timeDeducted", GameManager.sharedInstance.timeModifier)
     }
+    func signalLiveHelpMessage() {
+        socket.emit("liveHelpRequested", GameManager.sharedInstance.liveHelpMsg);
+    }
+    func signalReplyReceived(){
+        socket.emit("replyReceived");
+    }
     
     func establishConnection() {
         socket = SocketIOClient(socketURL: URL(string: serverIP)!, config: [.log(false), .forcePolling(true), .nsp("/\(roomName!)")])
@@ -143,9 +157,6 @@ class ConnectionManager: NSObject {
     func closeConnection() {
         socket.disconnect()
     }
-    
-    
-    
     
     
     func fetchData() {

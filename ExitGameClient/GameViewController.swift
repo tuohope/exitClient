@@ -133,11 +133,29 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     @IBAction func extraTimeOnePressed(_ sender: Any) {
-        gameManager.getExtraTime(15)
+        let alertController = UIAlertController(title: "Get Extra Time", message: "Get 15 mins extra for $4.99/person. Are you sure?", preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "OK ", style: UIAlertActionStyle.default) {
+            (result : UIAlertAction) -> Void in
+            self.gameManager.getExtraTime(15)
+        }
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive))
+        alertController.addAction(okAction)
+            
+        self.present(alertController, animated: true, completion: nil)
     }
         
     @IBAction func extraTimeTwoPressed(_ sender: Any) {
-        gameManager.getExtraTime(30)
+        let alertController = UIAlertController(title: "Get Extra Time", message: "Get 30 mins extra for $8.99/person. Are you sure?", preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "OK ", style: UIAlertActionStyle.default) {
+            (result : UIAlertAction) -> Void in
+            self.gameManager.getExtraTime(30)
+        }
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive))
+        alertController.addAction(okAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 
     @IBAction func logButtonPressed(_ sender: Any) {

@@ -20,7 +20,7 @@ protocol ConnectionManagerDelegate {
 class ConnectionManager: NSObject {
 
     static let sharedInstance: ConnectionManager = ConnectionManager();
-    var serverIP = "http://192.168.0.46:3001/";
+    var serverIP = "http://192.168.0.160:3001/";
     var delegate:ConnectionManagerDelegate?
     var socket:SocketIOClient!
     var roomName:String?

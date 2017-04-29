@@ -157,7 +157,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgg-38-fxY" userLabel="hintButton">
-                                                            <rect key="frame" x="120" y="5.5" width="75" height="33"/>
+                                                            <rect key="frame" x="120" y="4" width="75" height="36"/>
                                                             <color key="backgroundColor" red="0.8980392157" green="0.30196078430000001" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="75" id="1Oo-rL-srn"/>
@@ -186,7 +186,7 @@
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7K8-bv-XWH" userLabel="objectiveLabel">
-                                                            <rect key="frame" x="222" y="16" width="790" height="12"/>
+                                                            <rect key="frame" x="222" y="16" width="750" height="12"/>
                                                             <fontDescription key="fontDescription" name="SegoeUI-Light" family="Segoe UI" pointSize="20"/>
                                                             <color key="textColor" red="0.58431372549019611" green="0.59607843137254901" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -201,7 +201,7 @@
                                                         <constraint firstItem="C94-Ue-Nfb" firstAttribute="centerY" secondItem="OOa-Yc-xa0" secondAttribute="centerY" id="DXq-81-kw4"/>
                                                         <constraint firstItem="OOa-Yc-xa0" firstAttribute="leading" secondItem="fOV-wr-BiU" secondAttribute="leadingMargin" constant="50" id="JvZ-0m-cLL"/>
                                                         <constraint firstItem="1e2-Wl-ETu" firstAttribute="centerX" secondItem="OOa-Yc-xa0" secondAttribute="centerX" id="Rnb-wc-20S"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="7K8-bv-XWH" secondAttribute="trailing" constant="4" id="Twq-Lq-NBq"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="7K8-bv-XWH" secondAttribute="trailing" constant="44" id="Twq-Lq-NBq"/>
                                                         <constraint firstItem="C94-Ue-Nfb" firstAttribute="centerX" secondItem="OOa-Yc-xa0" secondAttribute="centerX" id="cdZ-QU-WXY"/>
                                                         <constraint firstItem="kgg-38-fxY" firstAttribute="centerY" secondItem="fOV-wr-BiU" secondAttribute="centerY" id="dPY-ve-IC3"/>
                                                         <constraint firstItem="C94-Ue-Nfb" firstAttribute="width" secondItem="OOa-Yc-xa0" secondAttribute="width" id="g0m-HF-5lg"/>
@@ -306,7 +306,7 @@
                                 <rect key="frame" x="0.0" y="634" width="1024" height="134"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="42:13" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XOx-S2-2RJ" userLabel="TimerLabel">
-                                        <rect key="frame" x="425.5" y="32" width="174" height="70"/>
+                                        <rect key="frame" x="426" y="32" width="174" height="70"/>
                                         <fontDescription key="fontDescription" name="MyriadPro-Bold" family="Myriad Pro" pointSize="70"/>
                                         <color key="textColor" red="0.90588235294117647" green="0.29803921568627451" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -443,13 +443,13 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="[33:33]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHK-Ee-fYv" userLabel="timeStamp">
-                                                            <rect key="frame" x="4" y="10" width="54" height="21"/>
+                                                            <rect key="frame" x="4" y="10" width="54" height="24"/>
                                                             <fontDescription key="fontDescription" name="SegoeUI" family="Segoe UI" pointSize="18"/>
                                                             <color key="textColor" red="0.58431372549019611" green="0.59607843137254901" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="[Hint]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAh-j4-dTh" userLabel="typeStamp">
-                                                            <rect key="frame" x="63" y="10" width="42" height="21"/>
+                                                            <rect key="frame" x="63" y="10" width="44.5" height="24"/>
                                                             <fontDescription key="fontDescription" name="SegoeUI" family="Segoe UI" pointSize="18"/>
                                                             <color key="textColor" red="0.90588235294117647" green="0.29803921568627451" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -486,7 +486,7 @@
                                         <rect key="frame" x="31" y="0.0" width="449" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Logs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="db4-8W-xrT">
-                                                <rect key="frame" x="161.5" y="21.5" width="126" height="33.5"/>
+                                                <rect key="frame" x="162" y="21.5" width="126" height="33.5"/>
                                                 <fontDescription key="fontDescription" name="SegoeUI-Semibold" family="Segoe UI" pointSize="25"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>

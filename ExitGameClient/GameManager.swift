@@ -103,6 +103,7 @@ class GameManager: NSObject {
         textHintUsed = 0;
         chatHintUsed = 0;
         extraTimeBought = 0;
+        allowExtraTime = true;
         startTime = nil;
         currObjectiveId = -1;
         timeModifier = 0;

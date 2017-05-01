@@ -24,15 +24,13 @@ class ConnectionManager: NSObject {
     var delegate:ConnectionManagerDelegate?
     var socket:SocketIOClient!
     var roomName:String?
+    var roomID:Int?
     var connected = false;
 
     
     
     override private init() {
-//        socket = SocketIOClient(socketURL: URL(string: serverIP)!, config: [.log(false), .forcePolling(true)])
-//        socket.connect();
         super.init();
-//        registerHandler();
     }
     
     
@@ -44,7 +42,6 @@ class ConnectionManager: NSObject {
         }
         
         socket.on("roomRegistered") {data in
-//            print(data)
             self.connected = true;
             gameManager.gameStatus = .ready
         }
@@ -150,7 +147,7 @@ class ConnectionManager: NSObject {
     }
     
     func establishConnection() {
-        socket = SocketIOClient(socketURL: URL(string: serverIP)!, config: [.log(false), .forcePolling(true), .nsp("/\(roomName!)")])
+        socket = SocketIOClient(socketURL: URL(string: serverIP)!, config: [.log(false), .forcePolling(false), .nsp("/\(roomName!)")])
         socket.connect()
         registerHandler();
     }
@@ -161,9 +158,13 @@ class ConnectionManager: NSObject {
     
     func fetchData() {
         let gameManager = GameManager.sharedInstance;
+//        let url = serverIP+roomName! + "/data"
+        
+//        http://192.168.0.160:3001/api/rooms/0
+        let url = serverIP + "/api/rooms/\(roomID!)"
         
         delegate?.fetchDataStarted();
-        Alamofire.request(serverIP+roomName! + "/data").responseJSON { response in
+        Alamofire.request(url).responseJSON { response in
             guard response.result.isSuccess else {
                 print("Error while fetching remote rooms: \(String(describing: response.result.error))")
                 self.delegate?.fetchDataFailed();
@@ -177,15 +178,15 @@ class ConnectionManager: NSObject {
             }
             
             //print("JSON: \(JSON)")
-            gameManager.gameTitle = JSON["gameTitle"] as! String
-            gameManager.difficulty = JSON["difficulty"] as! Int
-            gameManager.successRate = JSON["successRate"] as! Int
+            gameManager.gameTitle = JSON["gametitle"] as! String
+//            gameManager.difficulty = JSON["difficulty"] as! Int
+//            gameManager.successRate = JSON["successRate"] as! Int
             
-            gameManager.runningTime = JSON["runningTime"] as! Int
+            gameManager.runningTime = JSON["runtime"] as! Int
             
-            gameManager.hintPenalty = JSON["hintPenalty"] as! Int
-            gameManager.chatPenalty = JSON["chatPenalty"] as! Int
-            gameManager.penaltyIncrement = JSON["penaltyIncrement"] as! Int
+            gameManager.hintPenalty = JSON["hintpenalty"] as! Int
+            gameManager.chatPenalty = JSON["chatpenalty"] as! Int
+            gameManager.penaltyIncrement = JSON["penaltyincrement"] as! Int
             
             let objsRawdata = JSON["objectives"] as! [Any]
             
@@ -193,17 +194,16 @@ class ConnectionManager: NSObject {
             for obj in objsRawdata{
                 var data = obj as![String:Any]
                 
-                let id = data["id"] as! Int
-                let objText = data["objectiveText"] as! String
-                let hintText = data["hintText"] as! String
-                let requires = data["required"] as! [Int]
-                let enables = data["enables"] as! [Int]
+                let id = data["oid"] as! Int
+                let objText = data["objectivetext"] as! String
+                let hintText = data["hinttext"] as! String
+                let requires = data["require"] as! [Int]
+                let enables = data["enable"] as! [Int]
                 let newObj = GameObjective.init(Id: id, ObjText: objText, HintText: hintText, Requires: requires, Enables: enables)
                 gameManager.objectives.append(newObj);
                 
             }
             gameManager.stepCompleteTime = [Int?](repeating: nil, count:gameManager.objectives.count)
-            gameManager.penaltyIncrement = JSON["penaltyIncrement"] as! Int
             self.delegate?.fetchDataSuccess();
         }
     }

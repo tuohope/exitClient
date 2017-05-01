@@ -64,6 +64,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        titleLabel.text = gameManager.gameTitle;
+        
         gameManager.gameManagerDelegate = self;
 
         self.objectiveTable.dataSource = self;
@@ -314,7 +316,7 @@ extension GameViewController : ObjectiveTableViewCellDelegate{
             if gameManager.allowExtraTime {
                 let alertController = UIAlertController(title: "Get a hint", message: "You don't have enough time to get a hint, do you wish to extend your play time and get a hint?", preferredStyle: UIAlertControllerStyle.alert)
                 let DestructiveAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.destructive)
-                let lowOption = UIAlertAction(title: "15 Mins ", style: UIAlertActionStyle.default) {
+                let lowOption = UIAlertAction(title: "15 Mins ($4.99/Person)", style: UIAlertActionStyle.default) {
                     (result : UIAlertAction) -> Void in
                     
                     self.gameManager.getExtraTime(15)
@@ -335,7 +337,7 @@ extension GameViewController : ObjectiveTableViewCellDelegate{
                     self.showLogView();
                     
                 }
-                let highOption = UIAlertAction(title: "30 Mins ", style: UIAlertActionStyle.default) {
+                let highOption = UIAlertAction(title: "30 Mins ($8.99/Person)", style: UIAlertActionStyle.default) {
                     (result : UIAlertAction) -> Void in
                     self.gameManager.getExtraTime(30)
                     currObj.isHintShown = true
@@ -464,7 +466,7 @@ extension GameViewController : GameManagerDelegate{
                     self.gameManager.getExtraTime(15)
                     
                 }
-                let highOption = UIAlertAction(title: "30 Mins ($9.99/Person)", style: UIAlertActionStyle.default) {
+                let highOption = UIAlertAction(title: "30 Mins ($8.99/Person)", style: UIAlertActionStyle.default) {
                     (result : UIAlertAction) -> Void in
                     self.gameManager.getExtraTime(30)
                     

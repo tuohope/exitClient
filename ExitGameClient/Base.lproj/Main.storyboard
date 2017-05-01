@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -45,29 +45,41 @@
                                     <action selector="AirplanePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1uD-ar-fuw"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iVj-BZ-XTC">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iVj-BZ-XTC">
                                 <rect key="frame" x="638.5" y="484" width="54" height="30"/>
                                 <state key="normal" title="Subway">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="SubwayPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2OE-G5-l1a"/>
+                                </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MXM-vt-btc">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MXM-vt-btc">
                                 <rect key="frame" x="751" y="369" width="34" height="30"/>
                                 <state key="normal" title="Mine">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="MinePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sgx-Fn-IvP"/>
+                                </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOB-gR-lCV">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOB-gR-lCV">
                                 <rect key="frame" x="238" y="369" width="36" height="30"/>
                                 <state key="normal" title="Terra">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="TerraPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UVr-rR-Pb1"/>
+                                </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-TI-wFm">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6S7-TI-wFm">
                                 <rect key="frame" x="333.5" y="484" width="52" height="30"/>
                                 <state key="normal" title="Altantis">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="AtlantisPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LWR-R1-diw"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.26830888605442177" green="0.34146471088435376" blue="0.57174744897959184" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -306,7 +318,7 @@
                                 <rect key="frame" x="0.0" y="634" width="1024" height="134"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="42:13" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XOx-S2-2RJ" userLabel="TimerLabel">
-                                        <rect key="frame" x="426" y="32" width="174" height="70"/>
+                                        <rect key="frame" x="425.5" y="32" width="174" height="70"/>
                                         <fontDescription key="fontDescription" name="MyriadPro-Bold" family="Myriad Pro" pointSize="70"/>
                                         <color key="textColor" red="0.90588235294117647" green="0.29803921568627451" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -486,7 +498,7 @@
                                         <rect key="frame" x="31" y="0.0" width="449" height="75"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game Logs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="db4-8W-xrT">
-                                                <rect key="frame" x="162" y="21.5" width="126" height="33.5"/>
+                                                <rect key="frame" x="161.5" y="21.5" width="126" height="33.5"/>
                                                 <fontDescription key="fontDescription" name="SegoeUI-Semibold" family="Segoe UI" pointSize="25"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>

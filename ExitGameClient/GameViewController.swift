@@ -169,7 +169,8 @@ class GameViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     @IBAction func startGamePressed(_ sender: Any) {
-        GameManager.sharedInstance.startGame();
+//        GameManager.sharedInstance.startGame();
+        ConnectionManager.sharedInstance.signalStartGame();
     }
     
     @IBAction func liveHelpPressed(_ sender: Any) {

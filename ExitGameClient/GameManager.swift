@@ -8,12 +8,12 @@
 
 import UIKit
 
-enum GameStatus {
-    case disconnected
-    case ready
-    case ingame
-    case paused
-    case finished
+enum GameStatus : Int{
+    case disconnected = 0
+    case ready = 1
+    case ingame = 2
+    case paused = 3
+    case finished = 4
 }
 
 protocol GameManagerDelegate {
@@ -58,7 +58,7 @@ class GameManager: NSObject {
     var allowExtraTime = true;
     var extraTimeBought = 0;
 
-    var startTime:Date?
+    var startTime:Int?
     var pausedTime = 0;
 
     var liveHelpPending = false;
@@ -69,30 +69,44 @@ class GameManager: NSObject {
         Timer.scheduledTimer(timeInterval:1, target: self, selector: #selector(GameManager.tickGame), userInfo: nil, repeats: true)
     }
     
+    func updateSessionData(_ d:[String:Any]) {
+        print(d)
+        startTime = d["starttime"] as! Int
+        chatHintUsed = d["chatused"] as! Int
+        textHintUsed = d["hintused"] as! Int
+        extraTimeBought = d["cygtime"] as! Int
+        allowExtraTime = d["allowcyg"] as! Bool
+        timeModifier = d["timemodifier"] as! Int
+        gameStatus = GameStatus(rawValue: d["roomstatus"] as! Int)!
+    }
     
     func startGame() {
-        if (self.gameStatus == .ready){
-            resetGame()
-            startTime = Date();
-            print(startTime!);
-            self.gameStatus = .ingame;
+//        if (self.gameStatus == .ready){
+//            resetGame()
+//            startTime = Date();
+//            print(startTime!);
+//            self.gameStatus = .ingame;
             objectivesShown.append(0);
             self.currObjectiveId = 0;
             gameManagerDelegate?.gameStarted();
             
-            ConnectionManager.sharedInstance.signalGameStarted();
+//            ConnectionManager.sharedInstance.signalGameStarted();
             ConnectionManager.sharedInstance.signalObjChanged();
-        }
+//        }
     }
     
     func stopGame()  {
-        if (self.gameStatus == .ingame || self.gameStatus == .finished){
-            self.gameStatus = .ready
+//        if (self.gameStatus == .ingame || self.gameStatus == .finished){
+//            self.gameStatus = .ready
             resetGame();
-            startTime = nil;
-            ConnectionManager.sharedInstance.signalGameStopped()
+//            startTime = nil;
+//            ConnectionManager.sharedInstance.signalGameStopped()
             gameManagerDelegate?.gameStopped();
-        }
+//        }
+    }
+    
+    func finishGame()  {
+        gameManagerDelegate?.gameFinished();
     }
     
     func resetGame() {
@@ -104,9 +118,9 @@ class GameManager: NSObject {
         chatHintUsed = 0;
         extraTimeBought = 0;
         allowExtraTime = true;
-        startTime = nil;
+//        startTime = nil;
         currObjectiveId = -1;
-        timeModifier = 0;
+//        timeModifier = 0;
         stepCompleteTime = [Int?](repeating: nil, count:objectives.count)
         pausedTime = 0
         liveHelpPending = false;
@@ -122,11 +136,11 @@ class GameManager: NSObject {
         if (self.gameStatus == .ingame){
             let now = Date();
             let nowInt = Int(now.timeIntervalSince1970);
-            currTime = nowInt - Int(startTime!.timeIntervalSince1970) + calculatePenalizedTime() - extraTimeBought - pausedTime + timeModifier;
+            currTime = nowInt - startTime! + calculatePenalizedTime() - extraTimeBought - pausedTime + timeModifier;
             if currTime >= runningTime {
                 gameStatus = .finished;
                 gameManagerDelegate?.gameFinished();
-                ConnectionManager.sharedInstance.signalGameFinished();
+//                ConnectionManager.sharedInstance.signalGameFinished();
             }
 
             gameManagerDelegate?.gameTicked();
@@ -142,22 +156,22 @@ class GameManager: NSObject {
     func addTime(_ t:Int) {
         timeModifier -= t;
         print(timeModifier);
-        ConnectionManager.sharedInstance.signalTimeAdded();
+//        ConnectionManager.sharedInstance.signalTimeAdded();
     }
     
     func deductTime(_ t:Int) {
         timeModifier += t;
-        ConnectionManager.sharedInstance.signalTimeDeducted();
+//        ConnectionManager.sharedInstance.signalTimeDeducted();
     }
     
     func enableCYG(){
         allowExtraTime = true;
-        ConnectionManager.sharedInstance.signalCYGEnabled();
+//        ConnectionManager.sharedInstance.signalCYGEnabled();
     }
     
     func disableCYG(){
         allowExtraTime = false;
-        ConnectionManager.sharedInstance.signalCYGDisabled();
+//        ConnectionManager.sharedInstance.signalCYGDisabled();
     }
     
     func getExtraTime(_ time:Int) {
@@ -169,9 +183,9 @@ class GameManager: NSObject {
          }
         
         
-        extraTimeBought += time * 60
-        allowExtraTime = false;
-        cm.signalBoughtExtraTime();
+//        extraTimeBought += time * 60
+//        allowExtraTime = false;
+        cm.signalBoughtExtraTime(time);
         
         
     }
